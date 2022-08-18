@@ -1,0 +1,61 @@
+package jphwany.soloproject.api.v1.member.controller;
+
+
+import jphwany.soloproject.api.v1.dto.MultiResponseDto;
+import jphwany.soloproject.api.v1.dto.SingleResponseDto;
+import jphwany.soloproject.api.v1.member.entity.Member;
+import jphwany.soloproject.api.v1.member.mapper.MemberMapper;
+import jphwany.soloproject.api.v1.member.service.MemberService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.Positive;
+import java.util.List;
+
+@RestController
+@RequestMapping("/v1/members")
+@Slf4j
+public class MemberController {
+
+    private final MemberService memberService;
+    private final MemberMapper mapper;
+
+    public MemberController(MemberService memberService, MemberMapper mapper) {
+        this.memberService = memberService;
+        this.mapper = mapper;
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity getCompanyType(
+            @RequestParam("companyType") String companyType,
+            @RequestParam("companyLocation") String companyLocation){
+
+        List<Member> memberList = memberService.findByCompanyType(companyType);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(mapper.membersToMemberResponses(memberList)), HttpStatus.OK);
+    }
+
+//    @GetMapping("/{company-location}")
+//    public ResponseEntity getCompanyLocation(
+//            @PathVariable("company-location") String companyLocation){
+//                List<Member> memberList2 = memberService.findByCompanyLocation(companyLocation);
+//                return new ResponseEntity<>(
+//                        new SingleResponseDto<>(mapper.membersToMemberResponses(memberList2)), HttpStatus.OK);
+//
+//    }
+
+    @GetMapping
+    public ResponseEntity getMembers(@Positive @RequestParam int page,
+                                     @Positive @RequestParam int size) {
+        Page<Member> pageMembers = memberService.findByMembers(page - 1, size);
+        List<Member> members = pageMembers.getContent();
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(mapper.membersToMemberResponses(members),
+                        pageMembers),
+                HttpStatus.OK);
+
+    }
+}
