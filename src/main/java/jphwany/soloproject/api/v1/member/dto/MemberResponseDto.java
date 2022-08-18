@@ -16,7 +16,7 @@ public class MemberResponseDto {
     private String companyType;
     private String companyLocation;
 
-    public String getMemberGender(){
+    public String getGender(){
         return gender.getGender();
     }
 

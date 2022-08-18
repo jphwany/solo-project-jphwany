@@ -21,8 +21,16 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    public List<Member> findByCompanyType(String companyType) {
-        return new ArrayList<>();
+    public List<Member> findByFilter(String companyType, String companyLocation){
+        List<Member> members = new ArrayList<>();
+        if (companyType.length() == 3 && companyLocation.length() != 3){
+            members = memberRepository.findByCompanyType(companyType);
+        }else if (companyType.length() != 3 && companyLocation.length() == 3){
+            members = memberRepository.findByCompanyLocation(companyLocation);
+        }else if (companyType.length() == 3 && companyLocation.length() == 3){
+            members = memberRepository.findByCompanyTypeAndCompanyLocation(companyType, companyLocation);
+        }else throw new RuntimeException();
+        return members;
     }
 
     public List<Member> findByCompanyLocation(String companyLocation) {

@@ -1,0 +1,43 @@
+= 전국 사업자 연합 커뮤니티
+:sectnums:
+:toc: left
+:toclevels:4
+:toc-title: Table of Contents
+:source-highlighter: prettify
+
+Jphwany <pjh5762@naver.com>
+
+v1.0.1, 2022.08.18
+
+***
+API Summary
+
+    전국 사업자 연합 커뮤니티 구현
+
+***
+
+NOTE: 회원가입 로직없이 회원 조회 기능만 구현 (업체, 지역, 전체)
+
+== MemberController
+=== 회원 조회
+.curl-request
+include::{snippets}/get-members-filter/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-members-filter/http-request.adoc[]
+
+.http-response
+include::{snippets}/get-members-filter/http-response.adoc[]
+
+.httpie-request
+include::{snippets}/get-members-filter/httpie-request.adoc[]
+
+.request-body
+include::{snippets}/get-members-filter/request-body.adoc[]
+
+.response-body
+include::{snippets}/get-members-filter/response-body.adoc[]
+
+.response-fields
+include::{snippets}/get-members-filter/response-fields.adoc[]
+

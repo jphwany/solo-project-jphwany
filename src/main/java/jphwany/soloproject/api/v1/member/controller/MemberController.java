@@ -29,23 +29,14 @@ public class MemberController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity getCompanyType(
+    public ResponseEntity getMembersByFilter(
             @RequestParam("companyType") String companyType,
             @RequestParam("companyLocation") String companyLocation){
 
-        List<Member> memberList = memberService.findByCompanyType(companyType);
+        List<Member> memberList = memberService.findByFilter(companyType, companyLocation);
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.membersToMemberResponses(memberList)), HttpStatus.OK);
     }
-
-//    @GetMapping("/{company-location}")
-//    public ResponseEntity getCompanyLocation(
-//            @PathVariable("company-location") String companyLocation){
-//                List<Member> memberList2 = memberService.findByCompanyLocation(companyLocation);
-//                return new ResponseEntity<>(
-//                        new SingleResponseDto<>(mapper.membersToMemberResponses(memberList2)), HttpStatus.OK);
-//
-//    }
 
     @GetMapping
     public ResponseEntity getMembers(@Positive @RequestParam int page,
